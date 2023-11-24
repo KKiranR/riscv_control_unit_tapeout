@@ -44,42 +44,42 @@ module user_proj_example #(
 `endif
 
     // Wishbone Slave ports (WB MI A)
-    input wb_clk_i,
-    /*input wb_rst_i,
-    input wbs_stb_i,
-    input wbs_cyc_i,
-    input wbs_we_i,
-    input [3:0] wbs_sel_i,
-    input [31:0] wbs_dat_i,
-    input [31:0] wbs_adr_i,*/
-   // output wbs_ack_o,
-   // output [31:0] wbs_dat_o,
+    //input wb_clk_i,
+    //input wb_rst_i,
+   // input wbs_stb_i,
+   // input wbs_cyc_i,
+   // input wbs_we_i,
+   // input [3:0] wbs_sel_i,
+   // input [31:0] wbs_dat_i,
+   // input [31:0] wbs_adr_i,
+   //output wbs_ack_o,
+   //output [31:0] wbs_dat_o,
 
     // Logic Analyzer Signals
- //  input  [127:0] la_data_in,
-    //output [127:0] la_data_out,
-  //  input  [127:0] la_oenb,
+ //input  [127:0] la_data_in,
+   // output [127:0] la_data_out,
+  //input  [127:0] la_oenb,
+   // output [2:0] irq
 
-    // IOs
-    input  [19:0] io_in,
-    output [4:0] io_out,
-  //  output [15:0] io_oeb,
+    //IOs
+    input  [`MPRJ_IO_PADS:0] io_in,
+    output [`MPRJ_IO_PADS:0] io_out,
+ // output [`MPRJ_IO_PADS:0] io_oeb,
 
     // IRQ
- //   output [2:0] irq
 );
-    wire clk;
+   /* wire clk;
     wire [6:0]funct7;
     wire[2:0]funct3;
     wire [6:0] opcode;
     wire [3:0] alu_control;
-    wire regwrite_control;
+    wire regwrite_control;*/
 
-   assign clk=wb_clk_i;
-    assign {funct7,funct3,opcode}=io_in[19:0];
-    assign io_out[4:0]={alu_control,regwrite_control};
-    CONTROL  dut(clk,funct7,funct3,opcode,alu_control,regwrite_control);
-
+ //  assign clk=wb_clk_i;
+    //assign {funct7,funct3,opcode}=io_in[15:0];
+    //assign io_out[4:0]={alu_control,regwrite_control};
+    CONTROL  dut(.clk(wb_clk_i),.funct7(io_in[15:10]),.funct3(io_in[9:7]),.opcode(io_in[6:0]),.alu_control(io_out[4:1],.regwrite_control(io_out[0]);
+assign io_oeb=0;
 endmodule
 
 module  CONTROL(
